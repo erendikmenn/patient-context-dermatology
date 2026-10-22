@@ -1,0 +1,15 @@
+{
+  "seed": 42,
+  "feature_set": "morphometry",
+  "n_estimators": 1000,
+  "max_depth": 4,
+  "learning_rate": 0.04,
+  "min_child_weight": 10,
+  "subsample": 0.8,
+  "colsample_bytree": 0.8,
+  "reg_lambda": 5.0,
+  "early_stopping_rounds": 60,
+  "n_jobs": 8,
+  "class_weight": "sqrt_ratio",
+  "target_sensitivity": 0.95
+}

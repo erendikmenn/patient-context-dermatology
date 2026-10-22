@@ -1,0 +1,132 @@
+{
+  "dataset": "SLICE-3D 2024 full training set",
+  "license": "CC-BY-NC-4.0",
+  "seed": 42,
+  "rows": 401059,
+  "patients": 1042,
+  "positive_lesions": 393,
+  "prevalence": 0.0009799056996601498,
+  "positive_patients": 259,
+  "patient_overlap": 0,
+  "image_count": 401059,
+  "zip_crc_checked": true,
+  "decoded_image_sample": 512,
+  "all_images_decoded": false,
+  "sample_width_range": [
+    83,
+    237
+  ],
+  "sample_height_range": [
+    83,
+    237
+  ],
+  "numeric_features": [
+    "age_approx",
+    "clin_size_long_diam_mm",
+    "tbp_lv_A",
+    "tbp_lv_Aext",
+    "tbp_lv_B",
+    "tbp_lv_Bext",
+    "tbp_lv_C",
+    "tbp_lv_Cext",
+    "tbp_lv_H",
+    "tbp_lv_Hext",
+    "tbp_lv_L",
+    "tbp_lv_Lext",
+    "tbp_lv_areaMM2",
+    "tbp_lv_area_perim_ratio",
+    "tbp_lv_color_std_mean",
+    "tbp_lv_deltaA",
+    "tbp_lv_deltaB",
+    "tbp_lv_deltaL",
+    "tbp_lv_deltaLBnorm",
+    "tbp_lv_eccentricity",
+    "tbp_lv_minorAxisMM",
+    "tbp_lv_norm_border",
+    "tbp_lv_norm_color",
+    "tbp_lv_perimeterMM",
+    "tbp_lv_radial_color_std_max",
+    "tbp_lv_stdL",
+    "tbp_lv_stdLExt",
+    "tbp_lv_symm_2axis"
+  ],
+  "categorical_features": [
+    "sex",
+    "anatom_site_general"
+  ],
+  "missing_fraction": {
+    "age_approx": 0.006976529637783967,
+    "clin_size_long_diam_mm": 0.0,
+    "tbp_lv_A": 0.0,
+    "tbp_lv_Aext": 0.0,
+    "tbp_lv_B": 0.0,
+    "tbp_lv_Bext": 0.0,
+    "tbp_lv_C": 0.0,
+    "tbp_lv_Cext": 0.0,
+    "tbp_lv_H": 0.0,
+    "tbp_lv_Hext": 0.0,
+    "tbp_lv_L": 0.0,
+    "tbp_lv_Lext": 0.0,
+    "tbp_lv_areaMM2": 0.0,
+    "tbp_lv_area_perim_ratio": 0.0,
+    "tbp_lv_color_std_mean": 0.0,
+    "tbp_lv_deltaA": 0.0,
+    "tbp_lv_deltaB": 0.0,
+    "tbp_lv_deltaL": 0.0,
+    "tbp_lv_deltaLBnorm": 0.0,
+    "tbp_lv_eccentricity": 0.0,
+    "tbp_lv_minorAxisMM": 0.0,
+    "tbp_lv_norm_border": 0.0,
+    "tbp_lv_norm_color": 0.0,
+    "tbp_lv_perimeterMM": 0.0,
+    "tbp_lv_radial_color_std_max": 0.0,
+    "tbp_lv_stdL": 0.0,
+    "tbp_lv_stdLExt": 0.0,
+    "tbp_lv_symm_2axis": 0.0
+  },
+  "splits": {
+    "test": {
+      "rows": 48870,
+      "patients": 157,
+      "positive_lesions": 65,
+      "prevalence": 0.0013300593411090648,
+      "positive_patients": 39
+    },
+    "train": {
+      "rows": 298560,
+      "patients": 729,
+      "positive_lesions": 271,
+      "prevalence": 0.0009076902465166131,
+      "positive_patients": 181
+    },
+    "validation": {
+      "rows": 53629,
+      "patients": 156,
+      "positive_lesions": 57,
+      "prevalence": 0.0010628577821700945,
+      "positive_patients": 39
+    }
+  },
+  "files": {
+    "input.zip": {
+      "url": "https://isic-archive.s3.amazonaws.com/challenges/2024/ISIC_2024_Training_Input.zip",
+      "size_bytes": 1237732474,
+      "sha256": "e99fd71ff396f8e5ba2d3a1a2d91ee2240bea6351f1a4a09b0d92451cd06cf39",
+      "downloaded_at_utc": "2026-10-22T21:55:11.204773+00:00"
+    },
+    "supplement.csv": {
+      "url": "https://isic-archive.s3.amazonaws.com/challenges/2024/ISIC_2024_Training_Supplement.csv",
+      "size_bytes": 41608235,
+      "sha256": "64fa4b3f67ffc8262c206eabeec8316e645d1c75d2db75059fc82520d52cd822",
+      "downloaded_at_utc": "2026-10-22T21:56:04.026726+00:00"
+    },
+    "ground_truth.csv": {
+      "url": "https://isic-archive.s3.amazonaws.com/challenges/2024/ISIC_2024_Training_GroundTruth.csv",
+      "size_bytes": 7219081,
+      "sha256": "e25f01d9717513068e3bf5f9e066dd7e50a2f8d7299fb84d8ed45ca191c82f56",
+      "downloaded_at_utc": "2026-10-22T21:56:15.590017+00:00"
+    }
+  },
+  "processed_sha256": "051bc7e0b62425e099908eca0f6d60f7b8cfc6d4c7389d25a094a564ed6204f4",
+  "split_sha256": "b657b4de9b902df3205a3257f016d19424aee5cb66fbca29cb2f031fcce38832"
+}
