@@ -6,9 +6,22 @@ EmbeddingGemma 2 ile gerçek görüntü embedding çıkarımı, görüntü XGBoo
 
 ## Mevcut durum
 
-23 Ekim 2026: resmî veri indirildi, 401.059 lezyon ve 1.042 hasta üzerinde hazırlık tamamlandı. İlk XGBoost modeli 298.560 eğitim lezyonunda eğitildi. 53.629 lezyonluk doğrulamada ROC-AUC 0,9359 ve AP 0,0611; test değerlendirilmedi. Yüksek duyarlılıkta yanlış pozitif sayısı yüksek; bu sonuç ilk araştırma baseline'ıdır. EmbeddingGemma 2 için 256 görüntülük hız testi tamamlandı: 280 görüntü token bütçesinde 7,26 görüntü/s, 70 token bütçesinde 31,95 görüntü/s. 10.271 eğitim ve değişmeyen 53.629 doğrulama lezyonuyla ilk embedding pilotu çalıştırılıyor. Veri/embedding sızıntısı ve model kaydetme/yükleme kontrollerini içeren 20 test geçti.
+23 Ekim 2026: resmî veri indirildi; 401.059 lezyon ve 1.042 hasta üzerinde hazırlık tamamlandı. EmbeddingGemma 2 ile **63.900 gerçek görüntü** işlendi ve üç XGBoost başlığı eğitildi. Bütün modeller aynı **53.629 lezyon, 156 hasta, 57 pozitif** içeren doğrulama grubunda değerlendirildi; test kullanılmadı.
 
-[Veri durum raporu](reports/data_status.md) · [İlk model sonuçları](reports/baseline-v1.md) · [Embedding deneyi ve komutlar](docs/EMBEDDING_EXPERIMENT.md)
+| Model | Eğitim lezyonu | AP ↑ | ROC-AUC ↑ | pAUC ↑ |
+| --- | ---: | ---: | ---: | ---: |
+| Mevcut metadata+morfometri | 298,560 | 0.0611 | 0.9359 | 0.1488 |
+| Eşleştirilmiş metadata kontrolü | 10,271 | 0.0599 | 0.9303 | 0.1433 |
+| EmbeddingGemma 2 görüntü | 10,271 | 0.0425 | 0.9113 | 0.1358 |
+| Embedding + metadata/morfometri | 10,271 | 0.0549 | 0.9506 | 0.1606 |
+
+**Bu pilotta AP açısından mevcut baseline geçilemedi.** Birleşik modelin ROC-AUC ve yüksek duyarlılık pAUC'si daha yüksek; yalnız görüntü modelinin AP'si daha düşük. Eğitim alt kümesi kullanan üç model birbiriyle eşleştirilmiştir; tam eğitim baseline'ıyla fark yalnızca embedding'e bağlanamaz. Bağımsız test veya istatistiksel üstünlük iddiası yoktur.
+
+256 görüntülük hız testinde 280 görüntü token bütçesi **7,26 görüntü/s**, 70 token bütçesi **31,95 görüntü/s** verdi. 70 token ile pilotun gerçek çıkarımı decode/checkpoint dahil **40,75 dakika**, ortalama **26,14 görüntü/s** sürdü. 768 boyutlu vektör cache'i yaklaşık 196 MB. Encoder donduruldu; öğrenilen modeller XGBoost başlıklarıdır.
+
+20 yazılım testi geçti. Kaydedilip yeniden yüklenen model tahminleri doğrulandı; dört modelin değerlendirme kimlikleri ve etiketleri birebir eşleşiyor.
+
+[Model karşılaştırması](reports/embedding_comparison.md) · [Embedding deneyi ve komutlar](docs/EMBEDDING_EXPERIMENT.md) · [Çıkarım kaydı](reports/embeddinggemma2-70-pilot-extraction.json) · [Veri durum raporu](reports/data_status.md)
 
 ## Kurulum
 

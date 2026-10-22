@@ -59,6 +59,27 @@ Embedding katkısını değerlendirmek için 2–4 arasındaki karşılaştırma
 
 AP ana karşılaştırma metriğidir; ROC-AUC, TPR≥0,8 bölgesinin normalize edilmemiş pAUC'si, Brier ve yüksek duyarlılıkta yanlış pozitif sayısı da raporlanır. Test bölümü son model seçilene kadar kullanılmaz. Aynı validation üzerinde erken durdurma/model seçimi yapıldığından sonuçlar bağımsız test performansı sayılmaz.
 
+## Tamamlanan pilotun sonucu
+
+63.900 görüntünün tamamı çıkarıldı. Decode ve checkpoint yazımı dahil 2.444,72 saniye (40,75 dakika), ortalama 26,14 görüntü/s ölçüldü; model yükleme ve son hash hesaplaması bu süreye dahil değil. Son vektör dosyası 196.300.928 byte. [Çıkarım manifesti](../reports/embeddinggemma2-70-pilot-extraction.json) tamamlandı durumu, model/split/hash/sürüm bilgilerini içerir.
+
+| Model | Eğitim lezyonu | AP ↑ | ROC-AUC ↑ | pAUC ↑ |
+| --- | ---: | ---: | ---: | ---: |
+| Mevcut metadata+morfometri | 298,560 | 0.0611 | 0.9359 | 0.1488 |
+| Eşleştirilmiş metadata kontrolü | 10,271 | 0.0599 | 0.9303 | 0.1433 |
+| EmbeddingGemma 2 görüntü | 10,271 | 0.0425 | 0.9113 | 0.1358 |
+| Embedding + metadata/morfometri | 10,271 | 0.0549 | 0.9506 | 0.1606 |
+
+[Detaylı karşılaştırma](../reports/embedding_comparison.md) ve her modelin JSON raporu repodadır. Eğitim süreleri metadata kontrolünde 0,35 s, görüntü başlığında 2,55 s, birleşik başlıkta 7,07 s olarak kaydedildi; veriyi/cache'i okuma süresi hariçtir. Bu alanda maliyetin büyük kısmı görüntü çıkarımıdır.
+
+Ana metrik AP'de birleşik model (0,05485), hem aynı küçük grupta eğitilen metadata kontrolünün (0,05990) hem mevcut tam eğitim baseline'ının (0,06110) altında kaldı. ROC-AUC ve yüksek duyarlılık pAUC'sinde birleşik modelin gözlenen değeri daha yüksek. Bu farklı metrikler aynı sonucu ölçmez; birini seçip genel üstünlük iddia etmiyoruz.
+
+Doğrulamada seçilen %96,49 duyarlılıkta bütün modeller 57 pozitiften 55'ini yakaladı. Yanlış pozitifler tam baseline'da 18.281, eşleştirilmiş metadata kontrolünde 22.631, görüntü modelinde 24.190, birleşik modelde 18.846 oldu. Birleşik model aynı eğitim örneğindeki kontrolün yanlış pozitiflerini azalttı; tam baseline'ın seviyesini geçemedi. Bu eşikler aynı validation üzerinde seçildi ve kalibrasyon yapılmadı.
+
+Dört modelin tahmin dosyalarında doğrulama kimlikleri ve etiketleri birebir eşleştirilerek kontrol edildi. Modeller kaydedilip tekrar yüklenince tahminleri değişmedi. Test bölümü kullanılmadı. Farklar için güven aralığı veya bağımsız test sonucu henüz yoktur.
+
+Sonraki deney için öncelik: tam eğitim grubunda aynı 70 token akışını çalıştırmak ve daha sonra aynı veri üzerinde 280 token kalite etkisini ölçmek. Bu pilot, daha yüksek görüntü çözünürlüğünün veya farklı başlık hiperparametrelerinin faydasını dışlamaz.
+
 ## Tekrar çalıştırma
 
 Önce README'deki download/prepare adımlarını tamamlayın. Tüm komutlar repo kökünden çalışır. `--extra embeddings` seçeneklerini koruyun; aksi halde uv sonraki komutta opsiyonel bağımlılıkları ortamdan kaldırabilir.
