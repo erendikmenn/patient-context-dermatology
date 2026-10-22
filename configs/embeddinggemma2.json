@@ -1,0 +1,11 @@
+{
+  "model_id": "google/embeddinggemma-2",
+  "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+  "dimension": 768,
+  "dtype": "bfloat16",
+  "disable_audio": true,
+  "normalize_embeddings": true,
+  "seed": 42,
+  "benchmark_images": 256,
+  "batch_sizes": [8, 16, 32, 64]
+}

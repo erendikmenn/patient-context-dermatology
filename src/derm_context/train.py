@@ -11,21 +11,9 @@ import numpy as np
 import pandas as pd
 from xgboost import XGBClassifier
 
-from derm_context.download import sha256_file
+from derm_context.dataset import load_prepared
 from derm_context.features import feature_columns, make_preprocessor, select_features
 from derm_context.metrics import choose_threshold, classification_metrics
-from derm_context.prepare import assert_split_integrity
-
-
-def load_prepared(processed_dir: Path) -> tuple[pd.DataFrame, dict]:
-    manifest = json.loads((processed_dir / "manifest.json").read_text())
-    if sha256_file(processed_dir / "metadata.parquet") != manifest["processed_sha256"]:
-        raise ValueError("Prepared metadata changed since preparation")
-    if sha256_file(processed_dir / "splits.csv") != manifest["split_sha256"]:
-        raise ValueError("Split assignments changed since preparation")
-    frame = pd.read_parquet(processed_dir / "metadata.parquet")
-    assert_split_integrity(frame)
-    return frame, manifest
 
 
 def save_report(report: dict, destination: Path) -> None:

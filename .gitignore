@@ -13,3 +13,5 @@ artifacts/
 *.npy
 *.npz
 *.parquet
+core
+*.core

@@ -4,7 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "derm-context"
-version = "0.1.0"
+version = "0.2.0"
+license = "MIT"
+readme = "README.md"
 description = "Patient-separated SLICE-3D dermatology research baselines"
 requires-python = ">=3.11,<3.14"
 dependencies = [
@@ -19,6 +21,13 @@ dependencies = [
 
 [project.scripts]
 derm = "derm_context.cli:main"
+
+[project.optional-dependencies]
+embeddings = [
+    "sentence-transformers[image]>=6.2,<7",
+    "torch>=2.14,<3",
+    "transformers>=5.20,<6",
+]
 
 [dependency-groups]
 dev = ["pytest>=8", "ruff>=0.11"]

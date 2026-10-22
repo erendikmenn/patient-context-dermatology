@@ -1,0 +1,72 @@
+{
+  "config": {
+    "model_id": "google/embeddinggemma-2",
+    "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+    "dimension": 768,
+    "dtype": "bfloat16",
+    "disable_audio": true,
+    "normalize_embeddings": true,
+    "seed": 42,
+    "benchmark_images": 256,
+    "batch_sizes": [
+      8,
+      16,
+      32,
+      64
+    ]
+  },
+  "hardware": {
+    "device": "mps",
+    "dtype": "torch.bfloat16",
+    "load_seconds": 2.151716166990809,
+    "parameters": 438760448,
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "versions": {
+      "torch": "2.14.1",
+      "transformers": "5.20.2",
+      "sentence-transformers": "6.2.0",
+      "pillow": "13.0.0"
+    }
+  },
+  "measurements": [
+    {
+      "batch_size": 8,
+      "images": 256,
+      "encode_seconds": 35.249707042006776,
+      "images_per_second": 7.262471704940043,
+      "mean_coordinate_std": 0.010792640037834644
+    },
+    {
+      "batch_size": 16,
+      "images": 256,
+      "encode_seconds": 38.74230662500486,
+      "images_per_second": 6.607763509743475,
+      "mean_coordinate_std": 0.010792640037834644
+    },
+    {
+      "batch_size": 32,
+      "images": 256,
+      "encode_seconds": 40.08867016696604,
+      "images_per_second": 6.385844153317655,
+      "mean_coordinate_std": 0.010792640037834644
+    },
+    {
+      "batch_size": 64,
+      "images": 256,
+      "encode_seconds": 49.28695262497058,
+      "images_per_second": 5.194072393721112,
+      "mean_coordinate_std": 0.010792640037834644
+    }
+  ],
+  "decoded_images": 256,
+  "decode_seconds": 0.9847838329733349,
+  "sample_source": "training patients only; uniform lesion sample",
+  "process_peak_rss_bytes": 4354326528,
+  "selected_batch_size": 8,
+  "train_validation_rows": 352189,
+  "estimated_encode_seconds_full_train_validation": 48494.371380536424,
+  "estimate_excludes_decode_checkpoint_and_variable_size_overhead": true,
+  "processed_sha256": "051bc7e0b62425e099908eca0f6d60f7b8cfc6d4c7389d25a094a564ed6204f4",
+  "split_sha256": "b657b4de9b902df3205a3257f016d19424aee5cb66fbca29cb2f031fcce38832",
+  "test_encoded": false
+}

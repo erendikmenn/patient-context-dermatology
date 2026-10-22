@@ -18,7 +18,7 @@
 
 JPEG görüntülerin her biri `isic_id` ile eşleşmeli. ZIP bütünlüğü kontrol edilir; encoder çalışırken her görüntü decode edilir, hatalı görüntü sessizce atılmaz. Doğru RGB dönüşümü ve modelin kendi görüntü ön işleyicisi kullanılır. Embedding önbelleğinde kimlik, model revizyonu, işlemci ayarları ve vektör boyutu tutulur.
 
-EmbeddingGemma 2 ağırlıkları henüz bu ilk tabular aşamanın bir parçası değildir. Modelin indirme erişimi, gerçek paket desteği, Apple GPU/CPU uyumu ve hızı görüntü aşamasında doğrulanacak. 401.059 × 768 adet float32 vektör, yalnızca vektörler için yaklaşık 1,23 GB yer tutar; 256 boyutta yaklaşık 0,41 GB. Bu hesap indeks/metadata/model belleğini içermez.
+EmbeddingGemma 2 ağırlıkları indirildi; sabit revizyonda CPU ve Apple GPU ile gerçek görüntü çıkarımı doğrulandı. İlk pilot 70 görüntü token bütçesi ve 768 boyutlu normalize vektör kullanır. Ayrıntılar ve tekrar çalıştırma komutları [embedding deneyi](EMBEDDING_EXPERIMENT.md) belgesindedir. 401.059 × 768 adet float32 vektör, yalnızca vektörler için yaklaşık 1,23 GB yer tutar; 256 boyutta yaklaşık 0,41 GB. Bu hesap indeks/metadata/model belleğini içermez.
 
 ## Hastaya özgü bağlam için gereksinimler
 
