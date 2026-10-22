@@ -1,5 +1,7 @@
 """Compare frozen image features and image+metadata on the existing patient split."""
 
+import hashlib
+import importlib.metadata
 import json
 import time
 from pathlib import Path
@@ -130,6 +132,16 @@ def train_embeddings(
     reloaded.load_model(destination / "model.json")
     np.testing.assert_allclose(scores, reloaded.predict_proba(x_valid)[:, 1], atol=1e-7, rtol=0)
     report = {
+        "training_cohort_sha256": hashlib.sha256(
+            train_frame[["isic_id", "patient_id", "target"]].to_csv(index=False).encode()
+        ).hexdigest(),
+        "validation_cohort_sha256": hashlib.sha256(
+            validation_frame[["isic_id", "patient_id", "target"]].to_csv(index=False).encode()
+        ).hexdigest(),
+        "versions": {
+            name: importlib.metadata.version(name)
+            for name in ["numpy", "pandas", "scikit-learn", "xgboost", "pyarrow", "joblib"]
+        },
         "run_name": run_name,
         "mode": mode,
         "config": config,
@@ -172,7 +184,11 @@ def train_embeddings(
     return report
 
 
-def comparison(reports_dir: Path, run_names: list[str]) -> None:
+def comparison(
+    reports_dir: Path, run_names: list[str], output_name: str = "embedding_comparison.md"
+) -> None:
+    if Path(output_name).name != output_name or not output_name.endswith(".md"):
+        raise ValueError("output_name must be a Markdown filename")
     runs = [json.loads((reports_dir / f"{name}.json").read_text()) for name in run_names]
     if (
         len({r["split_sha256"] for r in runs}) != 1
@@ -237,7 +253,7 @@ def comparison(reports_dir: Path, run_names: list[str]) -> None:
             ),
             "",
         ]
-    (reports_dir / "embedding_comparison.md").write_text("\n".join(lines))
+    (reports_dir / output_name).write_text("\n".join(lines))
 
 
 if __name__ == "__main__":

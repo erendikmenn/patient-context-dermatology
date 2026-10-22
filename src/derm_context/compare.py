@@ -10,11 +10,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run_names", nargs="+")
     parser.add_argument("--reports-dir", type=Path, default=Path("reports"))
+    parser.add_argument("--output-name", default="embedding_comparison.md")
     args = parser.parse_args()
     for name in args.run_names:
         if Path(name).name != name or name in {"", ".", ".."}:
             parser.error("run names must be single filenames without directory components")
-    comparison(args.reports_dir, args.run_names)
+    comparison(args.reports_dir, args.run_names, args.output_name)
 
 
 if __name__ == "__main__":
