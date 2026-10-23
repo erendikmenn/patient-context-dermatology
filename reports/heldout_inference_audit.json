@@ -1,0 +1,11 @@
+{
+  "protocol_sha256": "e5a295f899caba1566d087196c38970607fd18f0595f4f81c55132d7d573fa7b",
+  "validation_rows": 53629,
+  "max_absolute_prediction_difference": {
+    "metadata-full-control-v1": 0.0,
+    "image-eg2-70-full-v1": 0.0,
+    "fusion-eg2-70-full-v1": 0.0
+  },
+  "all_passed": true,
+  "test_evaluated": false
+}

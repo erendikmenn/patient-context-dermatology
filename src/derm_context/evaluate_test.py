@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 from xgboost import XGBClassifier
 
+from derm_context.dataset import load_prepared
 from derm_context.download import sha256_file
 from derm_context.embeddings import validate_embeddings, write_json
 from derm_context.evaluate_full import paired_bootstrap
@@ -19,6 +20,45 @@ from derm_context.test_embeddings import CACHE
 from derm_context.test_protocol import PROTOCOL, verify_protocol
 
 REPORT = Path("reports/heldout_test_results.json")
+
+
+def verify_validation_replay():
+    """Verify the new inference path against all previously saved validation predictions."""
+    from derm_context.train_embeddings import load_cache
+
+    protocol, _, _ = verify_protocol()
+    frame, source = load_prepared(Path("data/processed"))
+    selected, vectors, _ = load_cache(
+        Path("data/embeddings/embeddinggemma2-70-full"), frame, source
+    )
+    mask = (selected.split == "validation").to_numpy()
+    selected, vectors = selected[mask].reset_index(drop=True), vectors[mask]
+    differences = {}
+    for entry in protocol["models"]:
+        saved = (
+            pd.read_parquet(
+                Path("artifacts") / entry["run_name"] / "validation_predictions.parquet"
+            )
+            .sort_values("isic_id")
+            .reset_index(drop=True)
+        )
+        if not saved[["isic_id", "patient_id", "target"]].equals(
+            selected[["isic_id", "patient_id", "target"]]
+        ):
+            raise ValueError("Saved validation prediction identities differ")
+        replay = predict_frozen(entry, selected, vectors)
+        np.testing.assert_allclose(replay, saved.score, atol=1e-7, rtol=0)
+        differences[entry["run_name"]] = float(np.max(np.abs(replay - saved.score)))
+    result = {
+        "protocol_sha256": sha256_file(PROTOCOL),
+        "validation_rows": len(selected),
+        "max_absolute_prediction_difference": differences,
+        "all_passed": True,
+        "test_evaluated": False,
+    }
+    write_json(Path("reports/heldout_inference_audit.json"), result)
+    print(json.dumps(result, indent=2))
+    return result
 
 
 def load_test_cache(cache_dir, selected, protocol, protocol_path):
@@ -94,6 +134,10 @@ def evaluate_test(
     if report_path.exists() or destination.exists():
         raise FileExistsError("Held-out evaluation already exists; do not overwrite it")
     protocol, selected, _ = verify_protocol(protocol_path)
+    inference_audit = Path("reports/heldout_inference_audit.json")
+    audit = json.loads(inference_audit.read_text())
+    if not audit["all_passed"] or audit["protocol_sha256"] != sha256_file(protocol_path):
+        raise ValueError("Validation inference replay must pass for this protocol")
     vectors, extraction = load_test_cache(cache_dir, selected, protocol, protocol_path)
     started = time.monotonic()
     scores, models = [], []
@@ -149,6 +193,7 @@ def evaluate_test(
         "threshold_selected_on": "validation",
         "calibrated": False,
         "frozen_files_verified_before_and_after": True,
+        "validation_inference_audit_sha256": sha256_file(inference_audit),
         "primary_comparison": protocol["primary_comparison"],
         "models": models,
         "bootstrap": bootstrap,

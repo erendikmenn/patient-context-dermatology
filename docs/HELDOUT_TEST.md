@@ -23,6 +23,7 @@ uv sync --extra embeddings --group dev --locked
 uv run --extra embeddings python -m derm_context.test_protocol
 # Ayrı süreç: macOS'te encoder yüklenmeden önce XGBoost import edilmez.
 uv run --extra embeddings python -m derm_context.test_embeddings
+uv run --extra embeddings python -c 'from derm_context.evaluate_test import verify_validation_replay; verify_validation_replay()'
 uv run --extra embeddings python -m derm_context.evaluate_test
 uv run --extra embeddings python -m derm_context.report_test
 ```
@@ -32,6 +33,8 @@ Bu depoda protokol zaten sabittir; aynı yerel model dosyalarıyla devam ediliyo
 `test_embeddings` yalnız test görüntülerini işler, her 512 görüntüde checkpoint alır ve tamamlanan cache'i checksum ile doğrular. Mevcut eğitim/validation cache'ine test satırı eklemez. Veri ve model sürümleri değişirse devam etmez. Encoder frozen, 70 görüntü token'ı, 768 boyut, batch 16, MPS bfloat16; önceki çalışmayla aynı koşullar.
 
 `evaluate_test` model ve ön işlemeyi yalnızca yükler; `fit`/`fit_transform` veya eşik seçimi çağırmaz. Cache sırası, test kimlikleri, model dosyaları ve runtime denetlenir. Test tahminleri `artifacts/heldout-test-v1/` altında yerelde kalır. Mevcut değerlendirme sonuçlarının üzerine yazılmaz. Model ve veriler değerlendirmeden sonra tekrar doğrulanır.
+
+Yeni tahmin akışı önce 53.629 eski doğrulama satırında tekrar oynatıldı: üç model için kaydedilmiş tahminlerden maksimum mutlak fark **0.0**. [Tahmin akışı denetimi](../reports/heldout_inference_audit.json) testten önce kaydedildi.
 
 ## Yorumlama
 
