@@ -1,0 +1,107 @@
+{
+  "frozen_at_utc": "2026-10-23T06:17:35.850681+00:00",
+  "parent_commit": "21ed96cb0ed78b7ec9838acb05afa23e07aa1bf3",
+  "purpose": "One held-out patient test of existing models; no refitting or threshold tuning",
+  "primary_comparison": "fusion minus metadata average_precision",
+  "secondary_metrics": [
+    "roc_auc",
+    "pauc_tpr_ge_0_8_unstandardized",
+    "brier_score",
+    "log_loss",
+    "fixed_validation_threshold_counts"
+  ],
+  "bootstrap": {
+    "iterations": 1000,
+    "seed": 42,
+    "unit": "patient",
+    "interval": "paired percentile 95%; fitted models held fixed"
+  },
+  "models": [
+    {
+      "run_name": "metadata-full-control-v1",
+      "mode": "metadata",
+      "threshold": 0.01776900142431259,
+      "best_iteration": 62,
+      "feature_count": 38
+    },
+    {
+      "run_name": "image-eg2-70-full-v1",
+      "mode": "image",
+      "threshold": 0.0375378355383873,
+      "best_iteration": 35,
+      "feature_count": 768
+    },
+    {
+      "run_name": "fusion-eg2-70-full-v1",
+      "mode": "fusion",
+      "threshold": 0.002028954681009054,
+      "best_iteration": 276,
+      "feature_count": 806
+    }
+  ],
+  "files": {
+    "artifacts/metadata-full-control-v1/model.json": "5adc9d9cc27b37582f488dee0be55a0388643b3133d6799d73ef5ef63fafa8c5",
+    "artifacts/metadata-full-control-v1/run.json": "c7cd28ca732ed7845888fe6c311f823f5d92d23b63e6da5043c7169e8cc82588",
+    "reports/metadata-full-control-v1.json": "c7cd28ca732ed7845888fe6c311f823f5d92d23b63e6da5043c7169e8cc82588",
+    "artifacts/metadata-full-control-v1/preprocessor.joblib": "b8c9d46140b567a4ea70f8c90938dc63f6dfe7580358f217d7788214dcdf778b",
+    "artifacts/image-eg2-70-full-v1/model.json": "0cc90716db96bc11750fad74be275ef34c74130082053b7e41dc0258a1ce2205",
+    "artifacts/image-eg2-70-full-v1/run.json": "bebe57acc3e3449285e20f63425bfa6f91d605166f34216031969f3c1f3dcdc9",
+    "reports/image-eg2-70-full-v1.json": "bebe57acc3e3449285e20f63425bfa6f91d605166f34216031969f3c1f3dcdc9",
+    "artifacts/fusion-eg2-70-full-v1/model.json": "dd0b6e9f50f92e76a6b3d8c4acec41c547581c69b3cd79e5613ffa63c6c6c54a",
+    "artifacts/fusion-eg2-70-full-v1/run.json": "26cf36e79b72b86d8968d56d19f23b1af3edac25d1804df2358de5013cb07b0a",
+    "reports/fusion-eg2-70-full-v1.json": "26cf36e79b72b86d8968d56d19f23b1af3edac25d1804df2358de5013cb07b0a",
+    "artifacts/fusion-eg2-70-full-v1/preprocessor.joblib": "b8c9d46140b567a4ea70f8c90938dc63f6dfe7580358f217d7788214dcdf778b",
+    "configs/embeddinggemma2-70.json": "3af55e446f8f52bb92755ee417e98477e5508ac3203e0bfd8f3a68e3f4174ed5",
+    "configs/baseline.json": "f0e6186ac8757cba6070f1811c7eff973f549e011a25f27b773363fe59c3dbcc",
+    "reports/embeddinggemma2-70-full-extraction.json": "837641852f9a226c6b28c9a50e83e741fe5f7b81e0fb0a4eda2f0ca8a1a6aa3c"
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "pyarrow": "26.0.0",
+    "joblib": "1.6.0"
+  },
+  "embedding_config": {
+    "model_id": "google/embeddinggemma-2",
+    "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+    "dimension": 768,
+    "dtype": "bfloat16",
+    "disable_audio": true,
+    "normalize_embeddings": true,
+    "seed": 42,
+    "benchmark_images": 256,
+    "batch_sizes": [
+      8,
+      16
+    ],
+    "max_soft_tokens": 70
+  },
+  "embedding_hardware": {
+    "max_soft_tokens": 70,
+    "device": "mps",
+    "dtype": "torch.bfloat16",
+    "load_seconds": 2.888500082946848,
+    "parameters": 438760448,
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "versions": {
+      "torch": "2.14.1",
+      "transformers": "5.20.2",
+      "sentence-transformers": "6.2.0",
+      "pillow": "13.0.0"
+    }
+  },
+  "batch_size": 16,
+  "processed_sha256": "051bc7e0b62425e099908eca0f6d60f7b8cfc6d4c7389d25a094a564ed6204f4",
+  "split_sha256": "b657b4de9b902df3205a3257f016d19424aee5cb66fbca29cb2f031fcce38832",
+  "test_cohort_sha256": "d422bee50054b42a2028232d32e03fb0d570c97b1872d5ce6c5e53f29c22ca91",
+  "test_rows": 48870,
+  "test_patients": 157,
+  "test_positives": 65,
+  "test_positive_patients": 39,
+  "calibrated": false,
+  "refit": false,
+  "threshold_selected_on": "validation",
+  "external_validation": false
+}
