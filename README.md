@@ -6,22 +6,21 @@ EmbeddingGemma 2 ile gerçek görüntü embedding çıkarımı, görüntü XGBoo
 
 ## Mevcut durum
 
-23 Ekim 2026: resmî veri indirildi; 401.059 lezyon ve 1.042 hasta üzerinde hazırlık tamamlandı. EmbeddingGemma 2 ile **63.900 gerçek görüntü** işlendi ve üç XGBoost başlığı eğitildi. Bütün modeller aynı **53.629 lezyon, 156 hasta, 57 pozitif** içeren doğrulama grubunda değerlendirildi; test kullanılmadı.
+23 Ekim 2026: tam eğitim verisi deneyi tamamlandı.
+
+Tam veri deneyinde birleşik modelin ana metriği AP, metadata baseline'ına göre **yükseldi** (fark +0.014232). Eşleştirilmiş hasta bootstrap %95 aralığı [-0.026619, +0.060532]. Aralık sıfırı içeriyor; farkın yönü konusunda belirsizlik var.
 
 | Model | Eğitim lezyonu | AP ↑ | ROC-AUC ↑ | pAUC ↑ |
 | --- | ---: | ---: | ---: | ---: |
-| Mevcut metadata+morfometri | 298,560 | 0.0611 | 0.9359 | 0.1488 |
-| Eşleştirilmiş metadata kontrolü | 10,271 | 0.0599 | 0.9303 | 0.1433 |
-| EmbeddingGemma 2 görüntü | 10,271 | 0.0425 | 0.9113 | 0.1358 |
-| Embedding + metadata/morfometri | 10,271 | 0.0549 | 0.9506 | 0.1606 |
+| Metadata + morfometri (baseline tekrar) | 298,560 | 0.061105 | 0.935891 | 0.148805 |
+| Yalnız görüntü embedding'i | 298,560 | 0.039573 | 0.900879 | 0.128966 |
+| Embedding + metadata/morfometri | 298,560 | 0.075336 | 0.947379 | 0.159063 |
 
-**Bu pilotta AP açısından mevcut baseline geçilemedi.** Birleşik modelin ROC-AUC ve yüksek duyarlılık pAUC'si daha yüksek; yalnız görüntü modelinin AP'si daha düşük. Eğitim alt kümesi kullanan üç model birbiriyle eşleştirilmiştir; tam eğitim baseline'ıyla fark yalnızca embedding'e bağlanamaz. Bağımsız test veya istatistiksel üstünlük iddiası yoktur.
+Bütün modeller aynı 298.560 eğitim ve 53.629 doğrulama lezyonunu kullandı. Metadata baseline aynı tahminlerle yeniden üretildi. Gemma donduruldu; XGBoost başlıkları eğitildi. Test bölümüne dokunulmadı. 26 yazılım testi geçti.
 
-256 görüntülük hız testinde 280 görüntü token bütçesi **7,26 görüntü/s**, 70 token bütçesi **31,95 görüntü/s** verdi. 70 token ile pilotun gerçek çıkarımı decode/checkpoint dahil **40,75 dakika**, ortalama **26,14 görüntü/s** sürdü. 768 boyutlu vektör cache'i yaklaşık 196 MB. Encoder donduruldu; öğrenilen modeller XGBoost başlıklarıdır.
+[Tam deney özeti](reports/full_experiment_summary.md) · [Hasta bootstrap](reports/full_comparison_audit.md) · [Tam veri komutları](docs/FULL_DATA_EXPERIMENT.md) · [Önceki pilot](reports/embedding_comparison.md)
 
-20 yazılım testi geçti. Kaydedilip yeniden yüklenen model tahminleri doğrulandı; dört modelin değerlendirme kimlikleri ve etiketleri birebir eşleşiyor.
-
-[Model karşılaştırması](reports/embedding_comparison.md) · [Embedding deneyi ve komutlar](docs/EMBEDDING_EXPERIMENT.md) · [Çıkarım kaydı](reports/embeddinggemma2-70-pilot-extraction.json) · [Veri durum raporu](reports/data_status.md)
+Bootstrap sabit eğitilmiş modellere koşulludur; doğrulama üzerinden erken durdurma ve model seçiminin belirsizliğini kapsamaz. Bağımsız test veya klinik üstünlük kanıtı değildir. Test bölümü kullanılmadı ve olasılıklar kalibre edilmedi.
 
 ## Kurulum
 

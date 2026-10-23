@@ -67,4 +67,12 @@ Kod ve toplu sonuçlar GitHub'a eklenir; ham görüntüler, hasta/lezyon kimlikl
 
 ## Çalıştırma durumu
 
-Tam çıkarım başlatıldı. Tamamlandıktan sonra gerçek model ve karşılaştırma sonuçları bu belgeye eklenecek; henüz tam veri performansı raporlanmıyor.
+Tamamlandı. Tam veri deneyinde birleşik modelin ana metriği AP, metadata baseline'ına göre **yükseldi** (fark +0.014232). Eşleştirilmiş hasta bootstrap %95 aralığı [-0.026619, +0.060532]. Aralık sıfırı içeriyor; farkın yönü konusunda belirsizlik var.
+
+| Model | Eğitim lezyonu | AP ↑ | ROC-AUC ↑ | pAUC ↑ |
+| --- | ---: | ---: | ---: | ---: |
+| Metadata + morfometri (baseline tekrar) | 298,560 | 0.061105 | 0.935891 | 0.148805 |
+| Yalnız görüntü embedding'i | 298,560 | 0.039573 | 0.900879 | 0.128966 |
+| Embedding + metadata/morfometri | 298,560 | 0.075336 | 0.947379 | 0.159063 |
+
+[Sonuç özeti](../reports/full_experiment_summary.md) · [Metrikler](../reports/embedding_full_comparison.md) · [Belirsizlik ve eşleşme denetimi](../reports/full_comparison_audit.md)

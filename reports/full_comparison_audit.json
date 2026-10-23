@@ -1,0 +1,57 @@
+{
+  "baseline_reproduced": true,
+  "baseline_max_absolute_prediction_difference": 0.0,
+  "training_rows": 298560,
+  "validation_rows": 53629,
+  "validation_positives": 57,
+  "training_cohort_sha256": "291c601d9500d08609584259d8de43257c831a4083ef3cae051306741aaad5a1",
+  "validation_cohort_sha256": "d2637f8af22b660f2598a1d24386740c8057d5922e377fee3c32134b44ad4562",
+  "matched_settings_and_versions": true,
+  "test_evaluated": false,
+  "bootstrap": {
+    "requested_iterations": 1000,
+    "valid_iterations": 1000,
+    "seed": 42,
+    "patients": 156,
+    "differences": [
+      {
+        "average_precision": {
+          "delta": -0.021531324491110573,
+          "ci95_lower": -0.0763681880676159,
+          "ci95_upper": 0.011323571109747422
+        },
+        "roc_auc": {
+          "delta": -0.03501256220518445,
+          "ci95_lower": -0.08758857389344578,
+          "ci95_upper": 0.006299865429420747
+        },
+        "pauc_tpr_ge_0_8_unstandardized": {
+          "delta": -0.01983865622392425,
+          "ci95_lower": -0.06171022740686813,
+          "ci95_upper": 0.015660546767803485
+        },
+        "run_name": "image-eg2-70-full-v1"
+      },
+      {
+        "average_precision": {
+          "delta": 0.01423152715297895,
+          "ci95_lower": -0.026619237078162612,
+          "ci95_upper": 0.06053231671772004
+        },
+        "roc_auc": {
+          "delta": 0.011487737113260232,
+          "ci95_lower": -0.007835759256179273,
+          "ci95_upper": 0.031900414317487996
+        },
+        "pauc_tpr_ge_0_8_unstandardized": {
+          "delta": 0.010258370109549247,
+          "ci95_lower": -0.006602458288706251,
+          "ci95_upper": 0.027468730905541958
+        },
+        "run_name": "fusion-eg2-70-full-v1"
+      }
+    ],
+    "method": "paired patient-cluster percentile bootstrap; all lesions share patient weight",
+    "conditions": "fixed fitted models; validation selection uncertainty not included; not a final test"
+  }
+}
